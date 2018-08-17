@@ -1,5 +1,14 @@
-import Lane from '../models/lane';
 import uuid from 'uuid';
+import Lane from '../models/lane';
+
+export function getLanes(req, res) {
+  Lane.find().exec((err, lanes) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+    res.json({ lanes });
+  });
+}
 
 export function addLane(req, res) {
   if (!req.body.name) {
@@ -19,11 +28,14 @@ export function addLane(req, res) {
   });
 }
 
-export function getLanes(req, res) {
-  Lane.find().exec((err, lanes) => {
+export function deleteLane(req, res) {
+  Lane.findOne({ id: req.params.laneId }).exec((err, lane) => {
     if (err) {
       res.status(500).send(err);
     }
-    res.json({ lanes });
+
+    lane.remove(() => {
+      res.status(200).end();
+    });
   });
 }
