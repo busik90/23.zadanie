@@ -40,3 +40,20 @@ export function deleteNote(req, res) {
     });
   });
 }
+
+export function editNoteTask(req, res) {
+  Note.findOne({ id: req.params.noteId }).exec((err, note) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+
+    note.task = req.body.task;
+
+    note.save((err, saved) => {
+      if (err) {
+        res.status(500).send(err);
+      }
+      res.json(saved);
+    });
+  });
+}
