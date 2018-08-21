@@ -2,6 +2,7 @@ import uuid from 'uuid';
 
 // Export Constants
 export const CREATE_NOTE = 'CREATE_NOTE';
+export const EDIT_NOTE = 'EDIT_NOTE';
 export const UPDATE_NOTE = 'UPDATE_NOTE';
 export const DELETE_NOTE = 'DELETE_NOTE';
 
@@ -15,6 +16,13 @@ export function createNote(note, laneId) {
       ...note,
     },
   };
+}
+
+export function editNote(noteId) {
+  return {
+    type: EDIT_NOTE,
+    noteId
+  }
 }
 
 export function updateNote(note) {

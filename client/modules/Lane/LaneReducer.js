@@ -1,5 +1,5 @@
 // Import Actions
-import { CREATE_LANE, UPDATE_LANE, DELETE_LANE } from './LaneActions';
+import { CREATE_LANE, EDIT_LANE, UPDATE_LANE, DELETE_LANE } from './LaneActions';
 import { CREATE_NOTE, DELETE_NOTE } from '../Note/NoteActions';
 
 // Initial State
@@ -9,6 +9,11 @@ export default function lanes(state = initialState, action) {
   switch (action.type) {
     case CREATE_LANE:
       return [...state, action.lane];
+
+    case EDIT_LANE:
+      return state.map(lane => {
+        return lane.id === action.laneId ? { ...lane, editing: true } : lane;
+      });
 
     case UPDATE_LANE:
       return state.map(lane => {
