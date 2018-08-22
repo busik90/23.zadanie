@@ -1,4 +1,3 @@
-import uuid from 'uuid';
 import callApi from '../../util/apiCaller';
 
 // Modules for normalize response from server
@@ -26,7 +25,6 @@ export function createLane(lane) {
   return {
     type: CREATE_LANE,
     lane: {
-      id: uuid(),
       notes: [],
       ...lane,
     }
@@ -63,6 +61,14 @@ export function fetchLanes() {
 
       dispatch(createLanes(normalizedLanes));
       dispatch(createNotes(notes));
+    });
+  };
+}
+
+export function createLaneRequest(lane) {
+  return (dispatch) => {
+    return callApi('lanes', 'post', lane).then(res => {
+      dispatch(createLane(res));
     });
   };
 }
